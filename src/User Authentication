@@ -1,0 +1,52 @@
+// src/components/Login.js
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+
+const Login = ({ setAuthenticated }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Simulating an authentication API call
+    if (username === "user" && password === "password") {
+      // Set the authenticated state and redirect to the home page
+      localStorage.setItem("authToken", "12345"); // Save token to localStorage
+      setAuthenticated(true);
+      history.push("/dashboard");
+    } else {
+      alert("Invalid username or password.");
+    }
+  };
+
+  return (
+    <div className="login">
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
