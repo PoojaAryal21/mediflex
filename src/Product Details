@@ -1,0 +1,75 @@
+// src/components/ProductDetails.js
+import React from "react";
+
+const ProductDetails = ({ product }) => {
+  if (!product) return <div>Loading...</div>;
+
+  return (
+    <div className="product-details">
+      <div className="product-image">
+        <img src={product.image} alt={product.name} />
+      </div>
+      <div className="product-info">
+        <h2>{product.name}</h2>
+        <p>{product.description}</p>
+        <p className="product-price">${product.price}</p>
+
+        <div className="product-quantity">
+          <label>Quantity: </label>
+          <input type="number" min="1" max="10" defaultValue="1" />
+        </div>
+
+        <button className="add-to-cart">Add to Cart</button>
+
+        <div className="product-reviews">
+          <h3>Reviews</h3>
+          {product.reviews.length > 0 ? (
+            product.reviews.map((review, index) => (
+              <div key={index} className="review">
+                <p>{review.comment}</p>
+                <p>Rating: {review.rating} / 5</p>
+              </div>
+            ))
+          ) : (
+            <p>No reviews yet.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductDetails;
+// src/App.js
+import React from "react";
+import ProductDetails from "./components/ProductDetails";
+
+const App = () => {
+  const product = {
+    name: "Smartphone XYZ",
+    description:
+      "The Smartphone XYZ features an advanced camera system, a sleek design, and long battery life.",
+    price: 699.99,
+    image:
+      "https://via.placeholder.com/300x300.png?text=Smartphone+XYZ", // Replace with a real image URL
+    reviews: [
+      {
+        comment: "Great phone with a fantastic camera!",
+        rating: 5,
+      },
+      {
+        comment: "Battery life could be better.",
+        rating: 3,
+      },
+    ],
+  };
+
+  return (
+    <div className="App">
+      <h1>Product Details Page</h1>
+      <ProductDetails product={product} />
+    </div>
+  );
+};
+
+export default App;
